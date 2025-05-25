@@ -50,7 +50,10 @@ class _SignInPageState extends State<SignInPage> {
                   controller: _passwordController,
                   isObscureText: true),
               const SizedBox(height: 20),
-              const AuthGradientButton(buttonText: 'Sign In'),
+              AuthGradientButton(
+                buttonText: 'Sign In',
+                onPressed: () {},
+              ),
               const SizedBox(height: 15),
               RichText(
                 text: TextSpan(

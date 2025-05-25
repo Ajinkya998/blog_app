@@ -1,8 +1,10 @@
 import 'package:blog_app/core/theme/app_pallette.dart';
+import 'package:blog_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:blog_app/features/auth/presentation/widgets/auth_field.dart';
 import 'package:blog_app/features/auth/presentation/widgets/auth_gradient_button.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -28,6 +30,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Form(
@@ -54,7 +57,20 @@ class _SignUpPageState extends State<SignUpPage> {
                   controller: _passwordController,
                   isObscureText: true),
               const SizedBox(height: 20),
-              const AuthGradientButton(buttonText: 'Sign Up'),
+              AuthGradientButton(
+                buttonText: 'Sign Up',
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    context.read<AuthBloc>().add(
+                          AuthSignUp(
+                            name: _nameController.text.trim(),
+                            email: _emailController.text.trim(),
+                            password: _passwordController.text.trim(),
+                          ),
+                        );
+                  }
+                },
+              ),
               const SizedBox(height: 15),
               RichText(
                 text: TextSpan(
